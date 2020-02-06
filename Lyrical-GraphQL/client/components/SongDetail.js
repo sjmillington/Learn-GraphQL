@@ -10,9 +10,6 @@ const SongDetail = props => {
 
   const { song } = props.data
 
-  console.log(props)
-  console.log('loading')
-  
   if(!song) { return <div></div> }
 
   const { title, id, lyrics } = song
