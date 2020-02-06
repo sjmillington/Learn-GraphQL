@@ -1,31 +1,46 @@
 import React from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import { Link } from 'react-router';
+import query from '../queries/fetchSongs';
+import deleteSong from '../mutations/deleteSong';
+
+const onSongDelete = (id, props) => {
+  props.mutate({ variables: { id }})
+    .then(() => props.data.refetch())
+}
 
 const SongList = props => {
 
   if (props.data.loading) { return <div>Loading...</div>}
 
   return (
-    <ul className="collection">
-      { props.data.songs.map(song => (
-            <li key={song.id} className="collection-item">
-              {song.title}
-            </li>
-          )
-        )}
-    </ul>
+    <div>
+      <ul className="collection">
+        { props.data.songs.map(({id, title}) => (
+              <li key={id} className="collection-item">
+                <Link to={`/songs/${id}`}>{title}</Link>
+                <i
+                  className="material-icons"
+                  onClick={() => onSongDelete(id, props)}
+                > 
+                  delete
+                </i>
+              </li>
+            )
+          )}
+      </ul>
+      <Link
+        to="/songs/new"
+        className="btn-floating btn-large red right"
+      >
+        <i className="material-icons">add</i>
+      </Link>
+    </div>
+
   )
-  
 }
 
-const query = gql`
-  {
-    songs {
-      title,
-      id
-    }
-  }
-`
 
-export default graphql(query)(SongList);
+export default graphql(deleteSong)(
+  graphql(query)(SongList)
+)

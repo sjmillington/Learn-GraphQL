@@ -9,4 +9,6 @@ Top choices:
 - 3. Good performance for mobile applications. Very complex.
 
 
+### Query Variables
 
+These can be used to inject data inside mutations
