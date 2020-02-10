@@ -7,8 +7,10 @@ const schema = require('./schema/schema');
 
 const app = express();
 
+const password = process.env.LYRICA_MONGO_PASSWORD;
+
 // Replace with your mongoLab URI
-const MONGO_URI = 'mongodb+srv://admin:lyricaladmin@graphql-udemy-geifk.mongodb.net/test?retryWrites=true&w=majority';
+const MONGO_URI = `mongodb+srv://admin:${password}@graphql-udemy-geifk.mongodb.net/test?retryWrites=true&w=majority`;
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
 }
